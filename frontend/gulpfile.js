@@ -7,23 +7,23 @@ const webpackProdConfig = require("./webpack/config.prod.js");
 const JSONValidation = require("./scripts/json-validation");
 const eslintConfig = "../.eslintrc.json";
 
-task("lint", function () {
-  return src(["./src/ts/**/*.ts"])
-    .pipe(eslint(eslintConfig))
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
-});
+// task("lint", function () {
+//   return src(["./src/ts/**/*.ts"])
+//     .pipe(eslint(eslintConfig))
+//     .pipe(eslint.format())
+//     .pipe(eslint.failAfterError());
+// });
 
-task("lint-json", function () {
-  return src("./static/**/*.json")
-    .pipe(eslint(eslintConfig))
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
-});
+// task("lint-json", function () {
+//   return src("./static/**/*.json")
+//     .pipe(eslint(eslintConfig))
+//     .pipe(eslint.format())
+//     .pipe(eslint.failAfterError());
+// });
 
-task("validate-json-schema", function () {
-  return JSONValidation.validateAll();
-});
+// task("validate-json-schema", function () {
+//   return JSONValidation.validateAll();
+// });
 
 const taskWithWebpackConfig = (webpackConfig) => {
   return async () => {
@@ -49,17 +49,20 @@ const taskWithWebpackConfig = (webpackConfig) => {
 task("webpack", taskWithWebpackConfig(webpackDevConfig));
 task("webpack-production", taskWithWebpackConfig(webpackProdConfig));
 
-task("compile", series("lint", "lint-json", "webpack"));
+// task("compile", series("lint", "lint-json", "webpack"));
+task("compile", series("webpack"));
 
-task(
-  "compile-production",
-  series("lint", "lint-json", "validate-json-schema", "webpack-production")
-);
+// task(
+//   "compile-production",
+//   series("lint", "lint-json", "validate-json-schema", "webpack-production")
+// );
 
-task("watch", function () {
-  watch(["./src/ts/**/*.ts", "./src/ts/*.ts"], series("lint"));
-  watch(["./static/**/*.*", "./static/*.*"], series("lint-json"));
-});
+task("compile-production", series("webpack-production"));
+
+// task("watch", function () {
+//   watch(["./src/ts/**/*.ts", "./src/ts/*.ts"], series("lint"));
+//   watch(["./static/**/*.*", "./static/*.*"], series("lint-json"));
+// });
 
 task("build", series("compile"));
 
@@ -79,11 +82,11 @@ task("validate-other-json-schema", function () {
   return JSONValidation.validateOthers();
 });
 
-task("pr-check-lint-json", series("lint-json"));
-task("pr-check-quote-json", series("validate-quote-json-schema"));
-task("pr-check-language-json", series("validate-language-json-schema"));
-task("pr-check-other-json", series("validate-other-json-schema"));
+// task("pr-check-lint-json", series("lint-json"));
+// task("pr-check-quote-json", series("validate-quote-json-schema"));
+// task("pr-check-language-json", series("validate-language-json-schema"));
+// task("pr-check-other-json", series("validate-other-json-schema"));
 
-task("pr-check-lint", series("lint"));
+// task("pr-check-lint", series("lint"));
 
 task("pr-check-ts", series("webpack-production"));

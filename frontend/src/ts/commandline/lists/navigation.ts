@@ -11,14 +11,14 @@ const commands: MonkeyTypes.Command[] = [
       navigate("/");
     },
   },
-  {
-    id: "viewLeaderboards",
-    display: "View Leaderboards",
-    icon: "fa-crown",
-    exec: (): void => {
-      $("#top #menu .textButton.view-leaderboards").trigger("click");
-    },
-  },
+  // {
+  //   id: "viewLeaderboards",
+  //   display: "View Leaderboards",
+  //   icon: "fa-crown",
+  //   exec: (): void => {
+  //     $("#top #menu .textButton.view-leaderboards").trigger("click");
+  //   },
+  // },
   {
     id: "viewAbout",
     display: "View About Page",
